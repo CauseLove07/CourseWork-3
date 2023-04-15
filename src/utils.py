@@ -21,6 +21,7 @@ def get_last_five(data):
 
 
 def get_exchanged_data(data):
+    '''Собираем информацию и выводим в необходимом формате'''
     new_data = []
     for i in data:
         time = datetime.strptime(i['date'], '%Y-%m-%dT%H:%M:%S.%f').strftime('%d.%m.%Y')
