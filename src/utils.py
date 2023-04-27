@@ -1,6 +1,8 @@
 import json
 from datetime import datetime
 
+file = 'operations.json'
+
 def load_json(file):
     """Загружаем данные из файла"""
     with open(file, 'r', encoding='utf8') as json_file:
@@ -10,7 +12,7 @@ def load_json(file):
 
 def get_filtered_data(data):
     """Фильтруем файл по выполненым переводам(EXECUTED)"""
-    data = [x for x in data if 'state' in x and 'from' in x and x['state'] == 'EXECUTED']
+    data = [x for x in data if 'state' in x and x['state'] == 'EXECUTED']
     return data
 
 
@@ -26,16 +28,19 @@ def get_exchanged_data(data):
     for i in data:
         time = datetime.strptime(i['date'], '%Y-%m-%dT%H:%M:%S.%f').strftime('%d.%m.%Y')
         description = i['description']
-        sender = i['from'].split()
-        if len(sender) == 2:
-            from_ = f'{sender[0]} {sender[1][:4]} {sender[1][4:6]}** **** {sender[1][:4]}'
+        if 'from' in i:
+            sender = i['from'].split()
+            if len(sender) == 2:
+                from_ = f'{sender[0]} {sender[1][:4]} {sender[1][4:6]}** **** {sender[1][:4]}'
+            else:
+                from_ = f'{" ".join(sender[:-1])} {sender[-1][:4]} {sender[-1][4:6]}** **** {sender[-1][:4]}'
         else:
-            from_ = f'{" ".join(sender[:-1])} {sender[-1][:4]} {sender[-1][4:6]}** **** {sender[-1][:4]}'
+            from_ = ''
         receiver = i['to'].split()
         amount = i['operationAmount']['amount']
         currency = i['operationAmount']['currency']['name']
 
-        new_data.append(f'{time} {description}\n'
+        new_data.append(f'\n{time} {description}\n'
                         f'{from_} -> {receiver[0]} **{receiver[1][:4]}\n'
                         f'{amount} {currency}')
     return new_data
