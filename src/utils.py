@@ -31,9 +31,9 @@ def get_exchanged_data(data):
         if 'from' in i:
             sender = i['from'].split()
             if len(sender) == 2:
-                from_ = f'{sender[0]} {sender[1][:4]} {sender[1][4:6]}** **** {sender[1][:4]}'
+                from_ = f'{sender[0]} {sender[1][:4]} {sender[1][4:6]}** **** {sender[1][:4]} -> '
             else:
-                from_ = f'{" ".join(sender[:-1])} {sender[-1][:4]} {sender[-1][4:6]}** **** {sender[-1][:4]}'
+                from_ = f'{" ".join(sender[:-1])} {sender[-1][:4]} {sender[-1][4:6]}** **** {sender[-1][:4]} -> '
         else:
             from_ = ''
         receiver = i['to'].split()
@@ -41,6 +41,6 @@ def get_exchanged_data(data):
         currency = i['operationAmount']['currency']['name']
 
         new_data.append(f'\n{time} {description}\n'
-                        f'{from_} -> {receiver[0]} **{receiver[1][:4]}\n'
+                        f'{from_}{receiver[0]} **{receiver[1][:4]}\n'
                         f'{amount} {currency}')
     return new_data
