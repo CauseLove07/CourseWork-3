@@ -1,0 +1,3 @@
+{
+  "tests/test_units.py::test_load_json": true
+}

@@ -1,0 +1,6 @@
+[
+  "tests/test_units.py::test_filtered_data",
+  "tests/test_units.py::test_get_exchanged_data",
+  "tests/test_units.py::test_get_last_five",
+  "tests/test_units.py::test_load_json"
+]
